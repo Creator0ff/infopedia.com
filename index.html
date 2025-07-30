@@ -8,6 +8,30 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.net.min.js"></script>
     <style>
+        /* Navigation Styles */
+        .hamburger.open div:nth-child(1) {
+            transform: translateY(8px) rotate(45deg);
+        }
+        .hamburger.open div:nth-child(2) {
+            opacity: 0;
+        }
+        .hamburger.open div:nth-child(3) {
+            transform: translateY(-8px) rotate(-45deg);
+        }
+        #menu-items {
+            transition: all 0.3s ease;
+        }
+        #menu-items.active {
+            display: flex;
+            flex-direction: column;
+            position: absolute;
+            top: 60px;
+            left: 0;
+            right: 0;
+            background: rgba(17, 24, 39, 0.95);
+            padding: 1rem;
+            gap: 1rem;
+        }
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
         
         * {
@@ -49,23 +73,39 @@
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
         }
         
-        @media (max-width: 768px) {
+        @media (max-width: 1024px) {
             .section {
-                padding: 2rem 1rem;
-                min-height: 120vh;
+                padding: 3rem 1.5rem;
             }
+            
             .card {
                 padding: 1.5rem;
             }
-            .section#join .card {
-                min-height: 1200px;
+        }
+
+        @media (max-width: 768px) {
+            .section {
+                padding: 2rem 1rem;
+                min-height: auto;
             }
+            
+            .card {
+                padding: 1rem;
+            }
+
+            .section#join .card,
             .section#meeting .card,
             .section#contact .card {
-                min-height: 1100px;
+                min-height: auto;
+                padding-bottom: 2rem;
             }
+
             .grid.grid-cols-1 {
-                gap: 1.5rem;
+                gap: 1rem;
+            }
+
+            .video-container iframe {
+                max-height: 300px;
             }
         }
         
@@ -165,7 +205,52 @@
         }
     </style>
 </head>
-<body>
+<body oncontextmenu="return false;">
+    <!-- Navigation Bar -->
+    <nav class="fixed top-0 left-0 w-full z-50 bg-gray-900 bg-opacity-90">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="text-white text-2xl font-bold">INFOPEDIA</div>
+            <div class="md:hidden">
+                <button id="menu-toggle" class="text-white focus:outline-none">
+                    <div class="w-8 space-y-2 hamburger">
+                        <div class="h-0.5 w-8 bg-white transform transition duration-300"></div>
+                        <div class="h-0.5 w-8 bg-white transform transition duration-300"></div>
+                        <div class="h-0.5 w-8 bg-white transform transition duration-300"></div>
+                    </div>
+                </button>
+            </div>
+            <div id="menu-items" class="hidden md:flex space-x-8">
+                <a href="#about" class="text-white hover:text-blue-400 transition">About</a>
+                <a href="#expertise" class="text-white hover:text-blue-400 transition">Expertise</a>
+                <a href="#join" class="text-white hover:text-blue-400 transition">Join Us</a>
+                <a href="#contact" class="text-white hover:text-blue-400 transition">Contact</a>
+                <a href="#meeting" class="text-white hover:text-blue-400 transition">Meeting</a>
+            </div>
+        </div>
+    </nav>
+    <!-- Navigation Bar -->
+    <nav class="fixed top-0 left-0 w-full z-50 bg-gray-900 bg-opacity-90">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="text-white text-2xl font-bold">INFOPEDIA</div>
+            <div class="md:hidden">
+                <button id="menu-toggle" class="text-white focus:outline-none">
+                    <div class="w-8 space-y-2 hamburger">
+                        <div class="h-0.5 w-8 bg-white transform transition duration-300"></div>
+                        <div class="h-0.5 w-8 bg-white transform transition duration-300"></div>
+                        <div class="h-0.5 w-8 bg-white transform transition duration-300"></div>
+                    </div>
+                </button>
+            </div>
+            <div id="menu-items" class="hidden md:flex space-x-8">
+                <a href="#about" class="text-white hover:text-blue-400 transition">About</a>
+                <a href="#expertise" class="text-white hover:text-blue-400 transition">Expertise</a>
+                <a href="#join" class="text-white hover:text-blue-400 transition">Join Us</a>
+                <a href="#contact" class="text-white hover:text-blue-400 transition">Contact</a>
+                <a href="#meeting" class="text-white hover:text-blue-400 transition">Meeting</a>
+            </div>
+        </div>
+    </nav>
+    <div id="vanta-bg" class="vanta-bg flex items-center justify-center">
         <!-- 3D Background using Vanta.js -->
         <div class="text-center p-8">
             <h1 class="text-6xl font-bold mb-6 floating" style="text-shadow: 0 0 20px rgba(100, 200, 255, 0.8);">INFOPEDIA</h1>
@@ -198,15 +283,15 @@
     <!-- Expertise Section -->
     <div id="expertise" class="section bg-gradient-to-br from-gray-800 to-gray-900">
         <div class="container mx-auto">
-            <h2 class="text-4xl font-bold mb-12 text-center">Your Expertise Should be in </h2>
+            <h2 class="text-4xl font-bold mb-12 text-center">Your Expertise Should be in</h2>
             
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <!-- Video Editing Expertise -->
                 <div class="card">
                     <h3 class="text-2xl font-semibold mb-4">Video Editing</h3>
-                    <p class="mb-4"> professional editors can transform your raw footage into stunning visual stories for doing advertisement for our company.</p>
+                    <p class="mb-4">professional editors can transform your raw footage into stunning visual stories for doing advertisement for our company.</p>
                     <div class="video-container">
-                        <iframe src="https://cdn.pixabay.com/video/2023/11/21/189998-887067364_tiny.mp4?autoplay=1&mute=1&loop=1&playlist=dQw4w9WgXcQ&controls=0&disablekb=1" frameborder="0" allow="loop; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        <iframe src="https://cdn.pixabay.com/video/2023/11/21/189998-887067364_tiny.mp4?autoplay=1&mute=1&loop=1&playlist=dQw4w9WgXcQ&controls=0&disablekb=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                     </div>
                 </div>
                 
@@ -215,7 +300,7 @@
                     <h3 class="text-2xl font-semibold mb-4">Consulting</h3>
                     <p class="mb-4">Strategic advice from industry experts to help you navigate complex challenges.</p>
                     <div class="video-container">
-                        <iframe src="https://cdn.pixabay.com/video/2024/05/08/211200_tiny.mp4" frameborder="0" allow="loop; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" notallowfullscreen></iframe>
+                        <iframe src="https://cdn.pixabay.com/video/2024/05/08/211200_tiny.mp4" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                     </div>
                 </div>
                 
@@ -224,7 +309,7 @@
                     <h3 class="text-2xl font-semibold mb-4">Web Development</h3>
                     <p class="mb-4">Cutting-edge websites and applications tailored to your business needs.</p>
                     <div class="video-container">
-                        <iframe src="https://cdn.pixabay.com/video/2015/12/11/1625-148614367_tiny.mp4" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        <iframe src="https://cdn.pixabay.com/video/2015/12/11/1625-148614367_tiny.mp4" allowfullscreen></iframe>
                     </div>
                 </div>
                 
@@ -233,7 +318,7 @@
                     <h3 class="text-2xl font-semibold mb-4">Science & Research</h3>
                     <p class="mb-4">Translating complex scientific concepts into actionable insights.</p>
                     <div class="video-container">
-                        <iframe src="https://cdn.pixabay.com/video/2016/09/21/5373-183629075_tiny.mp4" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        <iframe src="https://cdn.pixabay.com/video/2016/09/21/5373-183629075_tiny.mp4" allowfullscreen></iframe>
                     </div>
                 </div>
                 
@@ -242,7 +327,7 @@
                     <h3 class="text-2xl font-semibold mb-4">Problem Solving</h3>
                     <p class="mb-4">Systematic approaches to tackle your toughest business challenges.</p>
                     <div class="video-container">
-                        <iframe src="https://cdn.pixabay.com/video/2023/05/05/161739-824152752_tiny.mp4" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        <iframe src="https://cdn.pixabay.com/video/2023/05/05/161739-824152752_tiny.mp4" allowfullscreen></iframe>
                     </div>
                 </div>
                 
@@ -251,7 +336,7 @@
                     <h3 class="text-2xl font-semibold mb-4">Marketing</h3>
                     <p class="mb-4">Creative strategies to amplify your brand and reach your target audience.</p>
                     <div class="video-container">
-                        <iframe src="https://cdn.pixabay.com/video/2024/12/24/248449_large.mp4" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        <iframe src="https://cdn.pixabay.com/video/2024/12/24/248449_large.mp4" allowfullscreen></iframe>
                     </div>
                 </div>
             </div>
@@ -272,8 +357,8 @@
                 <p class="text-lg mb-6 text-center">
                     Become part of the Infopedia network and connect with professionals from various fields.
                 </p>
-                <div class="w-full h-[1200px] overflow-auto">
-                    <iframe src="https://forms.gle/6B8hEAfmyUGbHW7z7" 
+                <div class="w-full h-[700px] sm:h-[800px] lg:h-[1000px] overflow-auto">
+                    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSeXK6SqSNzIcQNSjdy9pndjhJg51zBhm3o-6极速赛车开奖直播SJjeP8ZEJ9bgw/viewform?embedded=true" 
                             frameborder="0"
                             class="w-full h-full min-h-[1200px]"
                             marginheight="0"
@@ -353,7 +438,7 @@
                 </div>
                 
                 <div class="video-container mt-10">
-                    <iframe src="https://cdn.pixabay.com/video/2025/04/23/273922_tiny.mp4" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <iframe src="https://cdn.pixabay.com/video/2025/04/23/273922_tiny.mp4" allowfullscreen></iframe>
                 </div>
             </div>
         </div>
@@ -370,7 +455,7 @@
                 <a href="#" class="text-pink-500 hover:text-pink-400">Instagram</a>
                 <a href="#" class="text-gray-300 hover:text-white">YouTube</a>
             </div>
-            <p class="text-gray-400 text-sm">© 2025 Infopedia. All rights reserved.</p>
+            <p class="text-gray-400 text-sm">© 2023 Infopedia. All rights reserved.</p>
         </div>
         <div class="infinity-light"></div>
     </footer>
